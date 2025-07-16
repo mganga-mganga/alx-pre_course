@@ -36,31 +36,194 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
+# Custom CSS for AFL-themed styling
 st.markdown("""
 <style>
-    .main-header {
-        background: linear-gradient(90deg, #003f7f 0%, #cc2e3a 100%);
-        padding: 1rem;
-        border-radius: 10px;
+    /* Import AFL team colors and fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+    
+    /* Main theme colors */
+    :root {
+        --afl-red: #cc2e3a;
+        --afl-blue: #003f7f;
+        --afl-orange: #ff6b35;
+        --afl-green: #00a651;
+        --afl-purple: #5d2d91;
+        --afl-gold: #ffc72c;
+        --field-green: #2d5016;
+        --grass-light: #4a7c59;
+    }
+    
+    .main {
+        background: linear-gradient(135deg, var(--field-green) 0%, var(--grass-light) 100%);
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    /* Enhanced main header */
+    .afl-main-header {
+        background: linear-gradient(135deg, var(--afl-blue) 0%, var(--afl-red) 50%, var(--afl-orange) 100%);
+        padding: 2rem;
+        border-radius: 15px;
         margin-bottom: 2rem;
-    }
-    .main-header h1 {
-        color: white;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .afl-main-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .afl-main-header h1 {
+        color: white;
+        font-size: 3rem;
+        font-weight: 900;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         margin: 0;
+        position: relative;
+        z-index: 1;
     }
+    
+    .afl-subtitle {
+        color: rgba(255,255,255,0.9);
+        font-size: 1.2rem;
+        font-weight: 300;
+        margin-top: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Welcome section */
+    .welcome-section {
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        border: 2px solid var(--afl-gold);
+    }
+    
+    .feature-card {
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-left: 4px solid var(--afl-blue);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    /* AFL team colors for metrics */
     .metric-card {
-        background: #f0f2f6;
-        padding: 1rem;
-        border-radius: 8px;
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        padding: 1.5rem;
+        border-radius: 10px;
         margin: 0.5rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-top: 3px solid var(--afl-red);
     }
+    
     .query-box {
-        background: #e8f4f8;
-        padding: 1rem;
+        background: linear-gradient(145deg, #e8f4f8 0%, #f0f8ff 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 2px solid var(--afl-blue);
+        box-shadow: 0 4px 15px rgba(0,63,127,0.1);
+    }
+    
+    /* Navigation improvements */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 0.5rem;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background: linear-gradient(145deg, var(--afl-blue) 0%, var(--afl-red) 100%);
+        color: white;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        border: none;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(145deg, var(--afl-orange) 0%, var(--afl-gold) 100%);
+        color: black;
+    }
+    
+    /* Sidebar styling */
+    .css-1d391kg {
+        background: linear-gradient(180deg, var(--afl-blue) 0%, var(--field-green) 100%);
+    }
+    
+    /* Custom buttons */
+    .stButton > button {
+        background: linear-gradient(145deg, var(--afl-red) 0%, var(--afl-orange) 100%);
+        color: white;
+        border: none;
         border-radius: 8px;
-        border-left: 4px solid #003f7f;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(204,46,58,0.3);
+    }
+    
+    /* AFL field visualization */
+    .afl-field {
+        background: var(--field-green);
+        border: 3px solid white;
+        border-radius: 15px;
+        padding: 1rem;
+        margin: 1rem 0;
+        position: relative;
+    }
+    
+    .afl-field::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        height: 2px;
+        background: white;
+    }
+    
+    /* Stats highlighting */
+    .stat-highlight {
+        background: linear-gradient(90deg, var(--afl-gold) 0%, var(--afl-orange) 100%);
+        color: black;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+        display: inline-block;
+        margin: 0.2rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -94,13 +257,17 @@ class ScoutAIDashboard:
         """
         # Header
         st.markdown("""
-        <div class="main-header">
+        <div class="afl-main-header">
             <h1>🏈 Scout AI - AFL Scouting Platform</h1>
+            <p class="afl-subtitle">Your AI-powered AFL scouting assistant</p>
         </div>
         """, unsafe_allow_html=True)
         
         # Sidebar navigation
         self.create_sidebar()
+        
+        # Welcome section for new users
+        self.show_welcome_section()
         
         # Main content area
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
@@ -126,73 +293,302 @@ class ScoutAIDashboard:
         with tab5:
             self.reporting_interface()
     
+    def show_welcome_section(self):
+        """
+        Display an engaging welcome section with AFL theming and feature highlights
+        """
+        # Quick stats overview
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.markdown("""
+            <div class="metric-card">
+                <div class="feature-icon">🏆</div>
+                <h3>18 Teams</h3>
+                <p>Complete AFL coverage</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown("""
+            <div class="metric-card">
+                <div class="feature-icon">👨‍💼</div>
+                <h3>800+ Players</h3>
+                <p>Comprehensive database</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown("""
+            <div class="metric-card">
+                <div class="feature-icon">📊</div>
+                <h3>50+ Stats</h3>
+                <p>Detailed analytics</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col4:
+            st.markdown("""
+            <div class="metric-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Powered</h3>
+                <p>Smart insights</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Welcome content
+        st.markdown("""
+        <div class="welcome-section">
+            <h2>🎯 Welcome to Scout AI</h2>
+            <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                Your comprehensive AFL scouting platform powered by artificial intelligence. 
+                Discover hidden talent, analyze performance trends, and make data-driven decisions.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Feature highlights
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown("""
+            <div class="feature-card">
+                <div class="feature-icon">🗣️</div>
+                <h3>Natural Language Queries</h3>
+                <p>Ask questions in plain English like "Find the best young midfielders" and get instant results.</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown("""
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Advanced Analytics</h3>
+                <p>Machine learning models analyze player performance and predict future potential.</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown("""
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Custom Reports</h3>
+                <p>Generate professional scouting reports in multiple formats for your team.</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Quick start actions
+        st.markdown("### 🚀 Quick Start")
+        
+        quick_col1, quick_col2, quick_col3, quick_col4 = st.columns(4)
+        
+        with quick_col1:
+            if st.button("🔍 Try a Query", key="quick_query"):
+                st.session_state.quick_start_query = "Find midfielders under 25 with high disposal counts"
+        
+        with quick_col2:
+            if st.button("👨‍💼 Browse Players", key="quick_players"):
+                st.session_state.quick_start_tab = "player_analysis"
+        
+        with quick_col3:
+            if st.button("🏟️ Team Stats", key="quick_teams"):
+                st.session_state.quick_start_tab = "team_analysis"
+        
+        with quick_col4:
+            if st.button("📊 View Charts", key="quick_viz"):
+                st.session_state.quick_start_tab = "visualization"
+        
+        # AFL field visualization
+        st.markdown("""
+        <div class="afl-field">
+            <div style="text-align: center; color: white; padding: 2rem;">
+                <h3>🏟️ AFL Data Sources</h3>
+                <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 1rem;">
+                    <div>📊 Squiggle API</div>
+                    <div>⚽ FootyWire</div>
+                    <div>📈 Champion Data</div>
+                    <div>🏆 AFL Tables</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
     def create_sidebar(self):
         """
-        Create sidebar with data management and settings
+        Create enhanced AFL-themed sidebar with better organization
         """
-        st.sidebar.title("Scout AI Control Panel")
+        # AFL-themed sidebar header
+        st.sidebar.markdown("""
+        <div style="text-align: center; padding: 1rem; background: linear-gradient(145deg, #003f7f, #cc2e3a); 
+                    border-radius: 10px; margin-bottom: 1rem;">
+            <h2 style="color: white; margin: 0;">🏈 Scout AI</h2>
+            <p style="color: rgba(255,255,255,0.8); margin: 0;">Control Panel</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Quick team selector
+        st.sidebar.markdown("### 🏟️ Quick Team Filter")
+        afl_teams = [
+            "All Teams", "Adelaide Crows", "Brisbane Lions", "Carlton", "Collingwood",
+            "Essendon", "Fremantle", "Geelong", "Gold Coast", "GWS Giants",
+            "Hawthorn", "Melbourne", "North Melbourne", "Port Adelaide", 
+            "Richmond", "St Kilda", "Sydney", "West Coast", "Western Bulldogs"
+        ]
+        selected_team = st.sidebar.selectbox("Filter by team:", afl_teams)
         
         # Data Management Section
-        st.sidebar.header("📥 Data Management")
+        st.sidebar.markdown("### 📥 Data Management")
         
-        if st.sidebar.button("🔄 Refresh Data", help="Scrape latest data from sources"):
-            with st.spinner("Scraping latest AFL data..."):
-                self.refresh_data()
-        
-        # Data status
+        # Enhanced data status with AFL theming
         if st.session_state.data_loaded:
-            st.sidebar.success("✅ Data loaded successfully")
+            st.sidebar.markdown("""
+            <div style="background: linear-gradient(145deg, #00a651, #4a7c59); 
+                        padding: 1rem; border-radius: 8px; margin: 0.5rem 0;">
+                <div style="color: white; text-align: center;">
+                    <strong>✅ Data Active</strong><br>
+                    Ready for analysis
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
             if not st.session_state.player_data.empty:
-                st.sidebar.info(f"Players: {len(st.session_state.player_data)}")
+                st.sidebar.metric("👨‍💼 Players", len(st.session_state.player_data))
             if not st.session_state.games_data.empty:
-                st.sidebar.info(f"Games: {len(st.session_state.games_data)}")
+                st.sidebar.metric("🏟️ Games", len(st.session_state.games_data))
         else:
-            st.sidebar.warning("⚠️ No data loaded")
-            if st.sidebar.button("🚀 Load Sample Data"):
+            st.sidebar.markdown("""
+            <div style="background: linear-gradient(145deg, #ff6b35, #cc2e3a); 
+                        padding: 1rem; border-radius: 8px; margin: 0.5rem 0;">
+                <div style="color: white; text-align: center;">
+                    <strong>⚠️ No Data</strong><br>
+                    Load data to begin
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Action buttons with AFL styling
+        col1, col2 = st.sidebar.columns(2)
+        with col1:
+            if st.button("🔄 Refresh", help="Get latest AFL data"):
+                with st.spinner("Loading AFL data..."):
+                    self.refresh_data()
+        
+        with col2:
+            if st.button("🚀 Sample", help="Load sample data"):
                 self.load_sample_data()
         
-        # Settings
-        st.sidebar.header("⚙️ Settings")
+        # Advanced Settings
+        st.sidebar.markdown("### ⚙️ Advanced Tools")
         
-        # ML Model settings
-        st.sidebar.subheader("ML Models")
-        if st.sidebar.button("🤖 Train Performance Model"):
-            if not st.session_state.player_data.empty:
-                with st.spinner("Training ML model..."):
-                    self.train_models()
-            else:
-                st.sidebar.error("No player data available for training")
+        # ML Model controls
+        with st.sidebar.expander("🤖 AI Models"):
+            st.write("Train custom models for:")
+            if st.button("📈 Performance Prediction"):
+                if not st.session_state.player_data.empty:
+                    with st.spinner("Training AI model..."):
+                        self.train_models()
+                else:
+                    st.error("Need player data first")
+            
+            if st.button("🎯 Player Similarity"):
+                st.info("Player similarity model coming soon!")
         
-        # Export options
-        st.sidebar.subheader("📤 Quick Export")
-        if st.sidebar.button("💾 Export All Data"):
-            self.export_data()
+        # Export and sharing
+        with st.sidebar.expander("📤 Export & Share"):
+            export_format = st.selectbox("Format:", ["PDF Report", "Excel Spreadsheet", "CSV Data"])
+            if st.button("💾 Export Data"):
+                self.export_data(export_format)
+        
+        # Quick insights
+        st.sidebar.markdown("### 💡 Quick Insights")
+        
+        # Sample insights based on current data
+        if st.session_state.data_loaded and not st.session_state.player_data.empty:
+            sample_insights = [
+                "🔥 Top performer this round",
+                "⭐ Rising star under 22",  
+                "🎯 Most accurate goal kicker",
+                "💪 Best contested marker"
+            ]
+            
+            for insight in sample_insights:
+                if st.sidebar.button(insight, key=f"insight_{insight}"):
+                    st.session_state.quick_insight = insight
     
     def natural_language_interface(self):
         """
-        Natural language query interface
+        Enhanced natural language query interface with AFL-specific examples
         """
         st.header("🗣️ Ask Scout AI Anything")
         
-        # Query examples
-        with st.expander("💡 Example Queries", expanded=False):
-            st.markdown("""
-            **Try these example queries:**
-            - "Find midfielders under 23 with high clearance rates in the VFL"
-            - "Show me the top 10 key forwards with best goal accuracy"
-            - "Compare Carlton players vs Richmond players for contested possessions"
-            - "List young defenders with good marking ability"
-            - "Who are the best ruckmen for contested ball work?"
-            """)
+        # Check for quick start query from welcome section
+        if st.session_state.get('quick_start_query'):
+            st.info(f"🚀 Quick Start Query: {st.session_state.quick_start_query}")
+            user_query = st.session_state.quick_start_query
+            st.session_state.quick_start_query = None  # Clear after use
+        else:
+            user_query = ""
         
-        # Query input
-        st.markdown('<div class="query-box">', unsafe_allow_html=True)
+        # AFL-specific query examples with better organization
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            with st.expander("💡 Player Search Examples", expanded=False):
+                st.markdown("""
+                **Finding Players:**
+                - "Find midfielders under 25 with high disposal efficiency"
+                - "Show me key forwards over 195cm with good goal accuracy"
+                - "List defenders with the best intercept marks this season"
+                - "Young ruckmen with good hitout-to-advantage ratios"
+                """)
+                
+                example_queries_players = [
+                    "Find midfielders under 25 with high disposal efficiency",
+                    "Show me key forwards over 195cm",
+                    "List defenders with best intercept marks",
+                    "Young ruckmen with good hitouts"
+                ]
+                
+                for query in example_queries_players:
+                    if st.button(f"Try: {query[:30]}...", key=f"example_player_{query}"):
+                        user_query = query
+        
+        with col2:
+            with st.expander("🏟️ Team & Comparison Examples", expanded=False):
+                st.markdown("""
+                **Team Comparisons:**
+                - "Compare Richmond vs Collingwood forward pressure"
+                - "Show AFL vs VFL disposal differences for young players"
+                - "Best performing teams in contested possessions"
+                - "Which teams have the strongest midfield depth?"
+                """)
+                
+                example_queries_teams = [
+                    "Compare Richmond vs Collingwood forward pressure",
+                    "Show AFL vs VFL disposal differences",
+                    "Best performing teams in contested possessions",
+                    "Teams with strongest midfield depth"
+                ]
+                
+                for query in example_queries_teams:
+                    if st.button(f"Try: {query[:30]}...", key=f"example_team_{query}"):
+                        user_query = query
+        
+        # Enhanced query input with AFL theming
+        st.markdown("""
+        <div class="query-box">
+            <h4>🎯 Enter Your Scouting Query</h4>
+            <p>Use natural language to describe what you're looking for. Our AI understands AFL terminology!</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Query input with pre-filled quick start
         user_query = st.text_input(
-            "Enter your scouting query:",
-            placeholder="e.g., Find the best young midfielders with high disposal counts",
-            help="Use natural language to describe what you're looking for"
+            "Your Query:",
+            value=user_query,
+            placeholder="e.g., Find the best young midfielders with high disposal counts in the VFL",
+            help="Use natural language - include position, age, stats, teams, or leagues"
         )
-        st.markdown('</div>', unsafe_allow_html=True)
         
         if user_query:
             col1, col2 = st.columns([3, 1])
@@ -857,20 +1253,53 @@ class ScoutAIDashboard:
         except Exception as e:
             st.error(f"Error training models: {e}")
     
-    def export_data(self):
+    def export_data(self, format_type="Excel Spreadsheet"):
         """
-        Export all data to Excel
+        Export data in multiple formats with enhanced feedback
         """
         try:
-            if not st.session_state.player_data.empty:
-                output_path = self.report_generator.generate_scouting_shortlist_excel(
-                    st.session_state.player_data,
-                    {'exported_at': pd.Timestamp.now().isoformat()},
-                    'scout_ai_export.xlsx'
-                )
-                st.success(f"✅ Data exported to: {output_path}")
+            if st.session_state.player_data.empty:
+                st.warning("⚠️ No data available to export")
+                return
+            
+            export_data = st.session_state.player_data
+            timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+            
+            with st.spinner(f"Exporting data as {format_type}..."):
+                if format_type == "Excel Spreadsheet":
+                    output_path = self.report_generator.generate_scouting_shortlist_excel(
+                        export_data,
+                        {'exported_at': pd.Timestamp.now().isoformat()},
+                        f'scout_ai_export_{timestamp}.xlsx'
+                    )
+                elif format_type == "CSV Data":
+                    output_path = f"scout_ai_export_{timestamp}.csv"
+                    export_data.to_csv(output_path, index=False)
+                elif format_type == "PDF Report":
+                    output_path = f"scout_ai_report_{timestamp}.pdf"
+                    # Generate comprehensive PDF report
+                    self.report_generator.generate_custom_report(
+                        export_data,
+                        output_path,
+                        report_type="pdf"
+                    )
+                
+                st.success(f"✅ {format_type} exported successfully!")
+                st.info(f"📁 File saved as: {output_path}")
+                
+                # Show export statistics
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Players Exported", len(export_data))
+                with col2:
+                    if 'Team' in export_data.columns:
+                        st.metric("Teams", export_data['Team'].nunique())
+                with col3:
+                    st.metric("File Size", f"{os.path.getsize(output_path) / 1024:.1f} KB")
+                    
         except Exception as e:
-            st.error(f"Export failed: {e}")
+            st.error(f"❌ Export failed: {e}")
+            logger.error(f"Export error: {e}")
     
     def show_team_fit_analysis(self, player_data: Dict[str, Any]):
         """
