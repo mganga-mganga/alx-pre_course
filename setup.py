@@ -56,7 +56,7 @@ setup(
         "wordcloud>=1.9.0",
         "Pillow>=10.1.0",
         "webdriver-manager>=4.0.0",
-        "pygwalker>=0.4.0",
+        "altair>=4.2.1,<5.0.0",
     ],
     extras_require={
         "dev": [
